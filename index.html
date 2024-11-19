@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri Responsif</title>
+  <script>
+    window.onload = function () {
+      const width = window.innerWidth;
+
+      if (width <= 768) {
+        window.location.href = "hp.html"; // Redirect ke galeri HP
+      } else if (width <= 1024) {
+        window.location.href = "tablet.html"; // Redirect ke galeri Tablet
+      } else {
+        window.location.href = "desktop.html"; // Redirect ke galeri Desktop
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>Memuat Galeri...</h1>
+</body>
+</html>
