@@ -117,7 +117,7 @@
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 kolom per baris */
+      grid-template-columns: repeat(5, 1fr); /* 4 kolom per baris */
       grid-gap: 10px;
       width: max-content; /* Menjaga agar panjang grid tidak terbatas */
       scroll-snap-align: auto; /* Agar snap saat geser */
@@ -356,7 +356,8 @@
   </div>
 </div>
 
-    <div class="gallery">
+    <div class="image-gallery">
+   <div class="gallery-item">
      <div class="gallery-item" onclick="checkStorageAndDownload(1)">
     <img src="Funkie.jpg" alt="USA">
     <div>USA</div>
@@ -437,9 +438,9 @@
     <img src="Funkie.jpg" alt="Italy">
     <div>Italy</div>
  </div>
-    </div>
+</div>
     
-     <div class="gallery">
+<div class="gallery">
 <div class="gallery-item" onclick="checkStorageAndDownload(21)">
     <img src="Funkie.jpg" alt="Spain">
     <div>Spain</div>
@@ -520,9 +521,9 @@
     <img src="Funkie.jpg" alt="Philippines">
     <div>Philippines</div>
  </div>
-    </div>
+</div>
     
-     <div class="gallery">
+      <div class="gallery">
       <div class="gallery-item" onclick="checkStorageAndDownload(41)">
     <img src="Funkie.jpg" alt="Egypt">
     <div>Egypt</div>
@@ -603,6 +604,9 @@
     <img src="Funkie.jpg" alt="Kazakhstan">
     <div>Kazakhstan</div>
 </div>
+</div>
+      
+<div class="image-gallery">
 <div class="gallery-item" onclick="checkStorageAndDownload(61)">
     <img src="Funkie.jpg" alt="Egypt">
     <div>Egypt</div>
