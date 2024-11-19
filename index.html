@@ -1,1265 +1,166 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banner Foto dengan Teks di Dalam</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Gambar</title>
+    <style>
+        /* Mengatur body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      padding: 10px;
-    }
+        /* Membuat container untuk galeri */
+        .image-gallery-container {
+            width: 100%;
+            padding: 10px;
+            overflow-x: auto;  /* Mengaktifkan scroll horizontal */
+            margin-bottom: 20px;
+        }
 
-    .banner {
-      background-image: url('IMG_8397.jpeg');
-      background-size: cover;
-      background-position: center;
-      width: 100vw;;
-      height: 300px;
-      margin: 1px auto;
-      margin: 4 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: white;
-      text-align: center;
-      border-radius: 5px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-    }
+        /* Gambar-gambar dalam galeri */
+        .image-gallery {
+            display: flex; /* Menyusun gambar secara horizontal */
+            gap: 10px; /* Jarak antar gambar */
+        }
 
-    /* Glowing animation */
-    @keyframes glowAnimation {
-      0% {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.5);
-      }
-      100% {
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 50px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.7);
-      }
-    }
+        /* Setiap gambar item */
+        .gallery-item {
+            flex: 0 0 auto; /* Gambar tidak bisa berubah ukuran */
+            width: 200px;   /* Lebar gambar */
+            height: 150px;  /* Tinggi gambar */
+            background-color: #ccc;  /* Warna latar belakang jika gambar tidak tersedia */
+            border-radius: 10px; /* Membuat sudut gambar melengkung */
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .banner-title {
-      font-size: 32px;
-      margin: 10px 0;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
+        .gallery-item img {
+            width: 100%;     /* Lebar gambar penuh sesuai ukuran container */
+            height: 100%;    /* Tinggi gambar penuh sesuai ukuran container */
+            object-fit: cover; /* Memastikan gambar tidak terdistorsi */
+        }
 
-    .banner-subtitle {
-      font-size: 24px;
-      margin: 5px 0;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-    }
+        /* Responsif, mengatur ukuran gambar */
+        @media (max-width: 768px) {
+            .gallery-item {
+                width: 150px;
+                height: 100px;
+            }
+        }
 
-    @media (max-width: 480px) {
-      .banner {
-        height: 160px;
-      }
-      .banner-title { font-size: 18px; }
-      .banner-subtitle { font-size: 14px; }
-    }
-
-    @media (min-width: 481px) and (max-width: 768px) {
-      .banner {
-        height: 210px;
-      }
-      .banner-title { font-size: 22px; }
-      .banner-subtitle { font-size: 18px; }
-    }
-
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .banner {
-        height: 380px;
-      }
-      .banner-title { font-size: 26px; }
-      .banner-subtitle { font-size: 20px; }
-    }
-
-    @media (min-width: 1025px) {
-      .banner {
-        height: 420px;
-      }
-      .banner-title { font-size: 32px; }
-      .banner-subtitle { font-size: 24px; }
-    }
-
-    .photo-carousel a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .photo-item div {
-      font-size: 14px;
-      margin-top: 5px;
-    }
-
-      .gallery-container {
-      display: flex;
-      overflow-x: auto; /* Agar galeri bisa digeser ke kiri-kanan */
-      gap: 10px;
-      padding-bottom: 20px;
-      scroll-snap-type: x mandatory; /* Agar ketika digeser, posisi snap */
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(, 1fr); /* 4 kolom per baris */
-      grid-gap: 10px;
-      width: max-content; /* Menjaga agar panjang grid tidak terbatas */
-      scroll-snap-align: auto; /* Agar snap saat geser */
-    }
-
-    .gallery-item {
-      position: relative;
-      background-color: #333;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .gallery-item img {
-      width: 100%;  /* Gambar mengisi seluruh lebar kotak */
-      height: 100%; /* Gambar mengisi seluruh tinggi kotak */
-      object-fit: cover; /* Menjaga aspek rasio gambar */
-    }
-
-    /* Responsif untuk HP: 4 gambar dalam satu baris */
-    @media (max-width: 768px) {
-      .gallery-item {
-        width: 85px;
-        height: 85px;
-      }
-    }
-
-    /* Responsif untuk Tablet: 6 gambar dalam satu baris */
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .gallery-item {
-        width: 100px;
-        height: 100px;
-      }
-    }
-
-    /* Responsif untuk Desktop: 8 gambar dalam satu baris */
-    @media (min-width: 1025px) {
-      .gallery-item {
-        width: 120px;
-        height: 120px;
-      }
-    }
-
-    /* Scrollbar untuk Webkit (Chrome, Edge, Safari) */
-    .gallery-container::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .gallery-container::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
-    }
-
-    .gallery-container::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-
-    .balance-section {
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row;
-      padding: 1px;
-      margin-top: 0.1px;
-      flex-wrap: wrap;
-      gap: 0.5px;
-    }
-
-    .balance-item {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      align-items: center;
-      color: white;
-      width: calc(100% - 1px);
-      box-shadow: none;
-      padding: 0px;
-      border-radius: 10px;
-      transition: transform 6s ease-in-out;
-    }
-
-    .balance-item:hover {
-      transform: scale(1.1);
-    }
-
-    .balance-item img {
-      width: 65px;
-      height: 65px;
-      margin-bottom: 1px;
-      animation: bounce 2s ease-in-out infinite;
-      background-color: transparent;
-      margin-top: 0.01px;
-    }
-
-/* Import font Digital-7 */
-@import url('https://drive.google.com/file/d/1c9RFdQ1moxEQ7STAPrZLXnC-SLkKOyB4/view?usp=drivesdk');
-
-/* Tampilan untuk saldo */
-.balance-section {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  padding: 1px;
-  margin-top: 0.1px;
-  flex-wrap: wrap;
-  gap: 0.5px;
-}
-
-.balance-item {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  width: calc(100% - 1px);
-  box-shadow: none;
-  padding: 0px;
-  border-radius: 10px;
-  transition: transform 6s ease-in-out;
-}
-
-.balance-item img {
-  width: 65px;
-  height: 65px;
-  margin-bottom: 1px;
-  background-color: transparent;
-  margin-top: 0.01px;
-}
-
-/* Gunakan font Digital-7 untuk saldo */
-.digital-font {
-  font-family: 'Digital-7', sans-serif;
-  font-size: 40px; /* Ukuran font untuk saldo */
-  color: white; /* Warna teks default */
-  text-align: center;
-  margin-top: 10px;
-  font-weight: bold; /* Teks tebal */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .balance-item img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .digital-font {
-    font-size: 30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .balance-item img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .digital-font {
-    font-size: 20px;
-  }
-}
-
-  footer-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Kiri untuk pencarian, kanan untuk info */
-  gap: 20px;
-}
-
-.search-section,
-.info-section {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.search-section h3,
-.info-section h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.search-section input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.search-section button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4e54c8;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.search-section button:hover {
-  background-color: #3c42a0;
-}
-
-.info-section p {
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* Responsif */
-@media (max-width: 768px) {
-  .footer-section {
-    grid-template-columns: 1fr; 
-  }
-}
-</style>
+        /* Responsif lebih kecil lagi untuk mobile */
+        @media (max-width: 480px) {
+            .gallery-item {
+                width: 120px;
+                height: 80px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="banner">
-      <h1 class="banner-title">Nama Web</h1>
-      <h2 class="banner-subtitle">Nama Lainnya Web</h2>
+    <div class="image-gallery-container">
+        <div class="image-gallery">
+            <!-- Gambar 1-16 -->
+            <div class="gallery-item">
+                <img src="image1.jpg" alt="Image 1">
+                <div>Image 1</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image2.jpg" alt="Image 2">
+                <div>Image 2</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image3.jpg" alt="Image 3">
+                <div>Image 3</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image4.jpg" alt="Image 4">
+                <div>Image 4</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image5.jpg" alt="Image 5">
+                <div>Image 5</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image6.jpg" alt="Image 6">
+                <div>Image 6</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image7.jpg" alt="Image 7">
+                <div>Image 7</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image8.jpg" alt="Image 8">
+                <div>Image 8</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image9.jpg" alt="Image 9">
+                <div>Image 9</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image10.jpg" alt="Image 10">
+                <div>Image 10</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image11.jpg" alt="Image 11">
+                <div>Image 11</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image12.jpg" alt="Image 12">
+                <div>Image 12</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image13.jpg" alt="Image 13">
+                <div>Image 13</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image14.jpg" alt="Image 14">
+                <div>Image 14</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image15.jpg" alt="Image 15">
+                <div>Image 15</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image16.jpg" alt="Image 16">
+                <div>Image 16</div>
+            </div>
+        </div>
     </div>
 
-    <div class="balance-section">
-  <div class="balance-item">
-    <img src="ETH.PNG" alt="ETH Logo">
-    <span class="error-text" data-error="ERROR">198373797</span> <!-- Tambahkan kelas error-text -->
-  </div>
-  <div class="balance-item">
-    <img src="BTC.PNG" alt="BTC Logo">
-    <span class="error-text" data-error="ERROR">373736665</span> <!-- Tambahkan kelas error-text -->
-  </div>
-  <div class="balance-item">
-    <img src="USDT.PNG" alt="USDT Logo">
-    <span class="error-text" data-error="ERROR">733773367</span> <!-- Tambahkan kelas error-text -->
-  </div>
-</div>
-    
-  <div class="gallery-item">
-     <div class="gallery-item" onclick="checkStorageAndDownload(1)">
-    <img src="Funkie.jpg" alt="USA">
-    <div>USA</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(2)">
-    <img src="Funkie.jpg" alt="China">
-    <div>China</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(3)">
-    <img src="Funkie.jpg" alt="India">
-    <div>India</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(4)">
-    <img src="Funkie.jpg" alt="Germany">
-    <div>Germany</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(5)">
-    <img src="Funkie.jpg" alt="UK">
-    <div>UK</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(6)">
-    <img src="Funkie.jpg" alt="Japan">
-    <div>Japan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(7)">
-    <img src="Funkie.jpg" alt="Australia">
-    <div>Australia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(8)">
-    <img src="Funkie.jpg" alt="Canada">
-    <div>Canada</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(9)">
-    <img src="Funkie.jpg" alt="Brazil">
-    <div>Brazil</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(10)">
-    <img src="Funkie.jpg" alt="Singapore">
-    <div>Singapore</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(11)">
-    <img src="Funkie.jpg" alt="France">
-    <div>France</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(12)">
-    <img src="Funkie.jpg" alt="South Korea">
-    <div>South Korea</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(13)">
-    <img src="Funkie.jpg" alt="Netherlands">
-    <div>Netherlands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(14)">
-    <img src="Funkie.jpg" alt="Russia">
-    <div>Russia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(15)">
-    <img src="Funkie.jpg" alt="UAE">
-    <div>UAE</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(16)">
-    <img src="Funkie.jpg" alt="Hong Kong">
-    <div>Hong Kong</div>
-</div>
-  </div>
-     
-  <div class="gallery-item"
-<div class="gallery-item" onclick="checkStorageAndDownload(17)">
-    <img src="Funkie.jpg" alt="Malaysia">
-    <div>Malaysia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(18)">
-    <img src="Funkie.jpg" alt="Indonesia">
-    <div>Indonesia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(19)">
-    <img src="Funkie.jpg" alt="Mexico">
-    <div>Mexico</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(20)">
-    <img src="Funkie.jpg" alt="Italy">
-    <div>Italy</div>
- </div>
-<div class="gallery-item" onclick="checkStorageAndDownload(21)">
-    <img src="Funkie.jpg" alt="Spain">
-    <div>Spain</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(22)">
-    <img src="Funkie.jpg" alt="South Africa">
-    <div>South Africa</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(23)">
-    <img src="Funkie.jpg" alt="Turkey">
-    <div>Turkey</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(24)">
-    <img src="Funkie.jpg" alt="Sweden">
-    <div>Sweden</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(25)">
-    <img src="Funkie.jpg" alt="Argentina">
-    <div>Argentina</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(26)">
-    <img src="Funkie.jpg" alt="Saudi Arabia">
-    <div>Saudi Arabia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(27)">
-    <img src="Funkie.jpg" alt="Poland">
-    <div>Poland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(28)">
-    <img src="Funkie.jpg" alt="Vietnam">
-    <div>Vietnam</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(29)">
-    <img src="Funkie.jpg" alt="Thailand">
-    <div>Thailand</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(30)">
-    <img src="Funkie.jpg" alt="Chile">
-    <div>Chile</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(31)">
-    <img src="Funkie.jpg" alt="Belgium">
-    <div>Belgium</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(32)">
-    <img src="Funkie.jpg" alt="Israel">
-    <div>Israel</div>
-</div>
-
-    <div class="gallery-item">
-<div class="gallery-item" onclick="checkStorageAndDownload(33)">
-    <img src="Funkie.jpg" alt="Switzerland">
-    <div>Switzerland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(34)">
-    <img src="Funkie.jpg" alt="Austria">
-    <div>Austria</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(35)">
-    <img src="Funkie.jpg" alt="Norway">
-    <div>Norway</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(36)">
-    <img src="Funkie.jpg" alt="Ireland">
-    <div>Ireland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(37)">
-    <img src="Funkie.jpg" alt="Denmark">
-    <div>Denmark</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(38)">
-    <img src="Funkie.jpg" alt="Finland">
-    <div>Finland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(39)">
-    <img src="Funkie.jpg" alt="New Zealand">
-    <div>New Zealand</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(40)">
-    <img src="Funkie.jpg" alt="Philippines">
-    <div>Philippines</div>
- </div>
-      <div class="gallery-item" onclick="checkStorageAndDownload(41)">
-    <img src="Funkie.jpg" alt="Egypt">
-    <div>Egypt</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(42)">
-    <img src="Funkie.jpg" alt="Nigeria">
-    <div>Nigeria</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(43)">
-    <img src="Funkie.jpg" alt="Pakistan">
-    <div>Pakistan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(44)">
-    <img src="Funkie.jpg" alt="Ukraine">
-    <div>Ukraine</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(45)">
-    <img src="Funkie.jpg" alt="Colombia">
-    <div>Colombia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(46)">
-    <img src="Funkie.jpg" alt="Peru">
-    <div>Peru</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(47)">
-    <img src="Funkie.jpg" alt="Romania">
-    <div>Romania</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(48)">
-    <img src="Funkie.jpg" alt="Greece">
-    <div>Greece</div>
-</div>
-
-      <div class="gallery-item">
-<div class="gallery-item" onclick="checkStorageAndDownload(49)">
-    <img src="Funkie.jpg" alt="Vietnam">
-    <div>Vietnam</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(50)">
-    <img src="Funkie.jpg" alt="Portugal">
-    <div>Portugal</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(51)">
-    <img src="Funkie.jpg" alt="Czech Republic">
-    <div>Czech Republic</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(52)">
-    <img src="Funkie.jpg" alt="Poland">
-    <div>Poland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(53)">
-    <img src="Funkie.jpg" alt="Malaysia">
-    <div>Malaysia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(54)">
-    <img src="Funkie.jpg" alt="Morocco">
-    <div>Morocco</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(55)">
-    <img src="Funkie.jpg" alt="Bangladesh">
-    <div>Bangladesh</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(56)">
-    <img src="Funkie.jpg" alt="Sri Lanka">
-    <div>Sri Lanka</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(57)">
-    <img src="Funkie.jpg" alt="Kenya">
-    <div>Kenya</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(58)">
-    <img src="Funkie.jpg" alt="Zimbabwe">
-    <div>Zimbabwe</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(59)">
-    <img src="Funkie.jpg" alt="Qatar">
-    <div>Qatar</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(60)">
-    <img src="Funkie.jpg" alt="Kazakhstan">
-    <div>Kazakhstan</div>
-</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(61)">
-    <img src="Funkie.jpg" alt="Egypt">
-    <div>Egypt</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(62)">
-    <img src="Funkie.jpg" alt="Jordan">
-    <div>Jordan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(63)">
-    <img src="Funkie.jpg" alt="Bulgaria">
-    <div>Bulgaria</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(64)">
-    <img src="Funkie.jpg" alt="Croatia">
-    <div>Croatia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(65)">
-    <img src="Funkie.jpg" alt="Tunisia">
-    <div>Tunisia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(66)">
-    <img src="Funkie.jpg" alt="Angola">
-    <div>Angola</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(67)">
-    <img src="Funkie.jpg" alt="Kuwait">
-    <div>Kuwait</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(68)">
-    <img src="Funkie.jpg" alt="Iraq">
-    <div>Iraq</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(69)">
-    <img src="Funkie.jpg" alt="Costa Rica">
-    <div>Costa Rica</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(70)">
-    <img src="Funkie.jpg" alt="Honduras">
-    <div>Honduras</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(71)">
-    <img src="Funkie.jpg" alt="Ecuador">
-    <div>Ecuador</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(72)">
-    <img src="Funkie.jpg" alt="Bolivia">
-    <div>Bolivia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(73)">
-    <img src="Funkie.jpg" alt="Lithuania">
-    <div>Lithuania</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(74)">
-    <img src="Funkie.jpg" alt="Estonia">
-    <div>Estonia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(75)">
-    <img src="Funkie.jpg" alt="Latvia">
-    <div>Latvia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(76)">
-    <img src="Funkie.jpg" alt="Moldova">
-    <div>Moldova</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(77)">
-    <img src="Funkie.jpg" alt="Luxembourg">
-    <div>Luxembourg</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(78)">
-    <img src="Funkie.jpg" alt="Armenia">
-    <div>Armenia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(79)">
-    <img src="Funkie.jpg" alt="Georgia">
-    <div>Georgia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(80)">
-    <img src="Funkie.jpg" alt="Myanmar">
-    <div>Myanmar</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(81)">
-    <img src="Funkie.jpg" alt="Laos">
-    <div>Laos</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(82)">
-    <img src="Funkie.jpg" alt="Nepal">
-    <div>Nepal</div>
-</div>
-      <div class="gallery-item" onclick="checkStorageAndDownload(83)">
-    <img src="Funkie.jpg" alt="Belize">
-    <div>Belize</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(84)">
-    <img src="Funkie.jpg" alt="Barbados">
-    <div>Barbados</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(85)">
-    <img src="Funkie.jpg" alt="Saint Lucia">
-    <div>Saint Lucia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(86)">
-    <img src="Funkie.jpg" alt="Jamaica">
-    <div>Jamaica</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(87)">
-    <img src="Funkie.jpg" alt="Trinidad and Tobago">
-    <div>Trinidad and Tobago</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(88)">
-    <img src="Funkie.jpg" alt="Bermuda">
-    <div>Bermuda</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(89)">
-    <img src="Funkie.jpg" alt="Cuba">
-    <div>Cuba</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(90)">
-    <img src="Funkie.jpg" alt="Mauritius">
-    <div>Mauritius</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(91)">
-    <img src="Funkie.jpg" alt="Fiji">
-    <div>Fiji</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(92)">
-    <img src="Funkie.jpg" alt="Malta">
-    <div>Malta</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(93)">
-    <img src="Funkie.jpg" alt="Cyprus">
-    <div>Cyprus</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(94)">
-    <img src="Funkie.jpg" alt="Seychelles">
-    <div>Seychelles</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(95)">
-    <img src="Funkie.jpg" alt="Isle of Man">
-    <div>Isle of Man</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(96)">
-    <img src="Funkie.jpg" alt="San Marino">
-    <div>San Marino</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(97)">
-    <img src="Funkie.jpg" alt="Monaco">
-    <div>Monaco</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(98)">
-    <img src="Funkie.jpg" alt="Saint Kitts and Nevis">
-    <div>Saint Kitts and Nevis</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(99)">
-    <img src="Funkie.jpg" alt="Palau">
-    <div>Palau</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(100)">
-    <img src="Funkie.jpg" alt="Samoa">
-    <div>Samoa</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(101)">
-    <img src="Funkie.jpg" alt="Vanuatu">
-    <div>Vanuatu</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(102)">
-    <img src="Funkie.jpg" alt="Togo">
-    <div>Togo</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(103)">
-    <img src="Funkie.jpg" alt="Armenia">
-    <div>Armenia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(104)">
-    <img src="Funkie.jpg" alt="Bhutan">
-    <div>Bhutan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(105)">
-    <img src="Funkie.jpg" alt="Guyana">
-    <div>Guyana</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(106)">
-    <img src="Funkie.jpg" alt="Suriname">
-    <div>Suriname</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(107)">
-    <img src="Funkie.jpg" alt="Gabon">
-    <div>Gabon</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(108)">
-    <img src="Funkie.jpg" alt="Cameroon">
-    <div>Cameroon</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(109)">
-    <img src="Funkie.jpg" alt="Djibouti">
-    <div>Djibouti</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(110)">
-    <img src="Funkie.jpg" alt="Eswatini">
-    <div>Eswatini</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(111)">
-    <img src="Funkie.jpg" alt="Lesotho">
-    <div>Lesotho</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(112)">
-    <img src="Funkie.jpg" alt="Mali">
-    <div>Mali</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(113)">
-    <img src="Funkie.jpg" alt="Ghana">
-    <div>Ghana</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(114)">
-    <img src="Funkie.jpg" alt="Rwanda">
-    <div>Rwanda</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(115)">
-    <img src="Funkie.jpg" alt="Uganda">
-    <div>Uganda</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(116)">
-    <img src="Funkie.jpg" alt="Botswana">
-    <div>Botswana</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(117)">
-    <img src="Funkie.jpg" alt="Madagascar">
-    <div>Madagascar</div>
-</div>
-      <div class="gallery-item" onclick="checkStorageAndDownload(118)">
-    <img src="Funkie.jpg" alt="Mozambique">
-    <div>Mozambique</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(119)">
-    <img src="Funkie.jpg" alt="Malawi">
-    <div>Malawi</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(120)">
-    <img src="Funkie.jpg" alt="Chad">
-    <div>Chad</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(121)">
-    <img src="Funkie.jpg" alt="Syria">
-    <div>Syria</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(122)">
-    <img src="Funkie.jpg" alt="Myanmar">
-    <div>Myanmar</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(123)">
-    <img src="Funkie.jpg" alt="Nicaragua">
-    <div>Nicaragua</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(124)">
-    <img src="Funkie.jpg" alt="Vietnam">
-    <div>Vietnam</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(125)">
-    <img src="Funkie.jpg" alt="Sierra Leone">
-    <div>Sierra Leone</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(126)">
-    <img src="Funkie.jpg" alt="Papua New Guinea">
-    <div>Papua New Guinea</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(127)">
-    <img src="Funkie.jpg" alt="Zambia">
-    <div>Zambia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(128)">
-    <img src="Funkie.jpg" alt="Tanzania">
-    <div>Tanzania</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(129)">
-    <img src="Funkie.jpg" alt="Kyrgyzstan">
-    <div>Kyrgyzstan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(130)">
-    <img src="Funkie.jpg" alt="Turkmenistan">
-    <div>Turkmenistan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(131)">
-    <img src="Funkie.jpg" alt="Uzbekistan">
-    <div>Uzbekistan</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(132)">
-    <img src="Funkie.jpg" alt="Belarus">
-    <div>Belarus</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(133)">
-    <img src="Funkie.jpg" alt="Bahrain">
-    <div>Bahrain</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(134)">
-    <img src="Funkie.jpg" alt="Maldives">
-    <div>Maldives</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(135)">
-    <img src="Funkie.jpg" alt="Mauritania">
-    <div>Mauritania</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(136)">
-    <img src="Funkie.jpg" alt="Lebanon">
-    <div>Lebanon</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(137)">
-    <img src="Funkie.jpg" alt="Albania">
-    <div>Albania</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(138)">
-    <img src="Funkie.jpg" alt="Bosnia and Herzegovina">
-    <div>Bosnia and Herzegovina</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(139)">
-    <img src="Funkie.jpg" alt="Kosovo">
-    <div>Kosovo</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(140)">
-    <img src="Funkie.jpg" alt="North Macedonia">
-    <div>North Macedonia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(141)">
-    <img src="Funkie.jpg" alt="Timor-Leste">
-    <div>Timor-Leste</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(142)">
-    <img src="Funkie.jpg" alt="Seychelles">
-    <div>Seychelles</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(143)">
-    <img src="Funkie.jpg" alt="Comoros">
-    <div>Comoros</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(144)">
-    <img src="Funkie.jpg" alt="Solomon Islands">
-    <div>Solomon Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(145)">
-    <img src="Funkie.jpg" alt="Vanuatu">
-    <div>Vanuatu</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(146)">
-    <img src="Funkie.jpg" alt="Kiribati">
-    <div>Kiribati</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(147)">
-    <img src="Funkie.jpg" alt="Marshall Islands">
-    <div>Marshall Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(148)">
-    <img src="Funkie.jpg" alt="Micronesia">
-    <div>Micronesia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(149)">
-    <img src="Funkie.jpg" alt="Palau">
-    <div>Palau</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(150)">
-    <img src="Funkie.jpg" alt="Nauru">
-    <div>Nauru</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(151)">
-    <img src="Funkie.jpg" alt="Tuvalu">
-    <div>Tuvalu</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(152)">
-    <img src="Funkie.jpg" alt="Saint Vincent and the Grenadines">
-    <div>Saint Vincent and the Grenadines</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(153)">
-    <img src="Funkie.jpg" alt="Grenada">
-    <div>Grenada</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(154)">
-    <img src="Funkie.jpg" alt="Saint Barthélemy">
-    <div>Saint Barthélemy</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(155)">
-    <img src="Funkie.jpg" alt="Saint Pierre and Miquelon">
-    <div>Saint Pierre and Miquelon</div>
-</div>
-      <div class="gallery-item" onclick="checkStorageAndDownload(156)">
-    <img src="Funkie.jpg" alt="Anguilla">
-    <div>Anguilla</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(157)">
-    <img src="Funkie.jpg" alt="Montserrat">
-    <div>Montserrat</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(158)">
-    <img src="Funkie.jpg" alt="Turks and Caicos Islands">
-    <div>Turks and Caicos Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(159)">
-    <img src="Funkie.jpg" alt="Bermuda">
-    <div>Bermuda</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(160)">
-    <img src="Funkie.jpg" alt="Cayman Islands">
-    <div>Cayman Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(161)">
-    <img src="Funkie.jpg" alt="Aruba">
-    <div>Aruba</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(162)">
-    <img src="Funkie.jpg" alt="Curacao">
-    <div>Curacao</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(163)">
-    <img src="Funkie.jpg" alt="Bonaire">
-    <div>Bonaire</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(164)">
-    <img src="Funkie.jpg" alt="Saint Helena">
-    <div>Saint Helena</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(165)">
-    <img src="Funkie.jpg" alt="Falkland Islands">
-    <div>Falkland Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(166)">
-    <img src="Funkie.jpg" alt="Guam">
-    <div>Guam</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(167)">
-    <img src="Funkie.jpg" alt="Northern Mariana Islands">
-    <div>Northern Mariana Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(168)">
-    <img src="Funkie.jpg" alt="American Samoa">
-    <div>American Samoa</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(169)">
-    <img src="Funkie.jpg" alt="American Samoa">
-    <div>American Samoa</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(170)">
-    <img src="Funkie.jpg" alt="Pitcairn Islands">
-    <div>Pitcairn Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(171)">
-    <img src="Funkie.jpg" alt="French Polynesia">
-    <div>French Polynesia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(172)">
-    <img src="Funkie.jpg" alt="Wallis and Futuna">
-    <div>Wallis and Futuna</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(173)">
-    <img src="Funkie.jpg" alt="New Caledonia">
-    <div>New Caledonia</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(174)">
-    <img src="Funkie.jpg" alt="Vanuatu">
-    <div>Vanuatu</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(175)">
-    <img src="Funkie.jpg" alt="Papua New Guinea">
-    <div>Papua New Guinea</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(176)">
-    <img src="Funkie.jpg" alt="Solomon Islands">
-    <div>Solomon Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(177)">
-    <img src="Funkie.jpg" alt="Samoa">
-    <div>Samoa</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(178)">
-    <img src="Funkie.jpg" alt="Seychelles">
-    <div>Seychelles</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(179)">
-    <img src="Funkie.jpg" alt="French Guiana">
-    <div>French Guiana</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(180)">
-    <img src="Funkie.jpg" alt="Greenland">
-    <div>Greenland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(181)">
-    <img src="Funkie.jpg" alt="Faroe Islands">
-    <div>Faroe Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(182)">
-    <img src="Funkie.jpg" alt="Ascension Island">
-    <div>Ascension Island</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(183)">
-    <img src="Funkie.jpg" alt="Isle of Man">
-    <div>Isle of Man</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(184)">
-    <img src="Funkie.jpg" alt="Saint Pierre and Miquelon">
-    <div>Saint Pierre and Miquelon</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(185)">
-    <img src="Funkie.jpg" alt="Antarctica">
-    <div>Antarctica</div>
-</div>
-      <div class="gallery-item" onclick="checkStorageAndDownload(186)">
-    <img src="Funkie.jpg" alt="Greenland">
-    <div>Greenland</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(187)">
-    <img src="Funkie.jpg" alt="Faroe Islands">
-    <div>Faroe Islands</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(188)">
-    <img src="Funkie.jpg" alt="Ascension Island">
-    <div>Ascension Island</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(189)">
-    <img src="Funkie.jpg" alt="Isle of Man">
-    <div>Isle of Man</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(190)">
-    <img src="Funkie.jpg" alt="Saint Pierre and Miquelon">
-    <div>Saint Pierre and Miquelon</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(191)">
-    <img src="Funkie.jpg" alt="Antarctica">
-    <div>Antarctica</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(192)">
-    <img src="Funkie.jpg" alt="Western Sahara">
-    <div>Western Sahara</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(193)">
-    <img src="Funkie.jpg" alt="Bonaire">
-    <div>Bonaire</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(194)">
-    <img src="Funkie.jpg" alt="Montserrat">
-    <div>Montserrat</div>
-</div>
-<div class="gallery-item" onclick="checkStorageAndDownload(195)">
-    <img src="Funkie.jpg" alt="Pitcairn Islands">
-    <div>Pitcairn Islands</div>
-</div>
-      </div>
+    <!-- Galeri untuk gambar ke-17 hingga ke-32 -->
+    <div class="image-gallery-container">
+        <div class="image-gallery">
+            <div class="gallery-item">
+                <img src="image17.jpg" alt="Image 17">
+                <div>Image 17</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image18.jpg" alt="Image 18">
+                <div>Image 18</div>
+            </div>
+            <!-- Tambahkan gambar hingga ke-32 -->
+        </div>
     </div>
-  </div>
 
-  <script>
-    // Function to check available storage
-    function checkStorageAndDownload(sizeInZB) {
-      if (navigator.storage && navigator.storage.estimate) {
-        navigator.storage.estimate().then((storage) => {
-          const availableSpace = storage.quota - storage.usage;
-          if (availableSpace >= sizeInZB * Math.pow(1024, 5)) { // Convert size from ZB to bytes
-            alert('Sufficient storage. Proceeding to download...');
-            checkUserLocation(); // Proceed to location check
-          } else {
-            alert('Insufficient storage space for the file.');
-          }
-        }).catch((error) => {
-          alert('Error checking storage: ' + error);
-        });
-      } else {
-        alert('Storage estimation not supported by this browser.');
-      }
-    }
+    <!-- Galeri untuk gambar ke-33 hingga ke-48 -->
+    <div class="image-gallery-container">
+        <div class="image-gallery">
+            <div class="gallery-item">
+                <img src="image33.jpg" alt="Image 33">
+                <div>Image 33</div>
+            </div>
+            <div class="gallery-item">
+                <img src="image34.jpg" alt="Image 34">
+                <div>Image 34</div>
+            </div>
+            <!-- Tambahkan gambar hingga ke-48 -->
+        </div>
+    </div>
 
-    // Function to check user's location
-    function checkUserLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          const highRiskAreas = [
-            { lat: 35.3606, lng: 137.4280 }, // Example location: Mount Fuji
-            { lat: 38.2970, lng: 141.0196 }  // Example location: Fukushima
-          ];
-
-          const isHighRisk = highRiskAreas.some(area => {
-            const distance = Math.sqrt(
-              Math.pow(latitude - area.lat, 2) + Math.pow(longitude - area.lng, 2)
-            );
-            return distance < 0.1; // Rough check for proximity
-          });
-
-          if (isHighRisk) {
-            generateTokenAndDownload();
-          } else {
-            alert('Download is only allowed in high-risk areas.');
-          }
-        }, (error) => {
-          alert('Error getting geolocation: ' + error.message);
-        });
-      } else {
-        alert('Geolocation is not supported by this browser.');
-      }
-    }
-
-    // Function to generate a random token, encrypt it, and start download
-    function generateTokenAndDownload() {
-      const token = generateRandomToken();
-      const encryptedToken = encryptToken(token);
-
-      // Save the token and its expiration time
-      const expirationTime = Date.now() + 24 * 60 * 60 * 1000; // 24 hours from now
-      sessionStorage.setItem('token', encryptedToken);
-      sessionStorage.setItem('expiration', expirationTime);
-
-      // Create a download file with the encrypted token
-      const blob = new Blob([encryptedToken], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'tokenFile.txt';
-      link.click();
-    }
-
-    // Function to generate a random token of 22 characters
-    function generateRandomToken() {
-      const charset = 'あいうえおかきくけこさしすせそたちつてとにぬねのまみむめもやゆよらりるれろわをんABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let token = '';
-      for (let i = 0; i < 22; i++) {
-        token += charset.charAt(Math.floor(Math.random() * charset.length));
-      }
-      return token;
-    }
-
-    // Simple encryption (reverse the string)
-    function encryptToken(token) {
-      return token.split('').reverse().join('');
-    }
-
-    // Function to check if the token is expired
-    function checkTokenExpiration() {
-      const expirationTime = sessionStorage.getItem('expiration');
-      if (expirationTime && Date.now() > expirationTime) {
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('expiration');
-        alert('Token has expired. Please generate a new one.');
-      } else {
-        alert('Token is still valid.');
-      }
-    }
-
-    // Update progress bar (dummy example, you can modify to reflect actual progress)
-    function updateProgressBar(percent) {
-      const progressBar = document.getElementById('progress-bar');
-      progressBar.style.width = percent + '%';
-    }
-
-    // Function to prevent device enumeration
-    function disableDeviceEnumeration() {
-      navigator.mediaDevices.enumerateDevices = function() {
-        return Promise.resolve([]);
-      };
-    }
-
-    // Call disableDeviceEnumeration to prevent device enumeration at page load
-    disableDeviceEnumeration();
-  </script>
 </body>
 </html>
