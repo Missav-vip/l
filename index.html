@@ -1,102 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Page</title>
+  <title>Banner Foto dengan Teks di Dalam</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-    }
-    header {
-      background-color: #333;
+      background-color: #000;
       color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .saldo {
-      background-color: #ff5722;
-      color: white;
-      padding: 15px;
-      margin: 20px 0;
-      text-align: center;
-    }
-    .gallery-container {
-      padding: 20px;
-    }
-    .gallery {
-      display: grid;
-      grid-gap: 10px;
-    }
-    .gallery-item {
-      position: relative;
-      background-color: #333;
-      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 10px;
+    }
+
+    .banner {
+      background-image: url('IMG_8397.jpeg');
+      background-size: cover;
+      background-position: center;
+      width: 100vw;
+      height: 300px;
+      margin: 1px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+    }
+
+    .banner-title {
+      font-size: 32px;
+      margin: 10px 0;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .banner-subtitle {
+      font-size: 24px;
+      margin: 5px 0;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .balance-section {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      padding: 1px;
+      margin-top: 0.1px;
+      flex-wrap: wrap;
+      gap: 0.5px;
+    }
+
+    .balance-item {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      width: calc(100% - 1px);
+      box-shadow: none;
+      padding: 0px;
+      border-radius: 10px;
+      transition: transform 6s ease-in-out;
+    }
+
+    .balance-item img {
+      width: 65px;
+      height: 65px;
+      margin-bottom: 1px;
+      background-color: transparent;
+      margin-top: 0.01px;
+    }
+
+    /* Gallery Styling */
+    .image-gallery {
+      display: flex;
+      flex-wrap: nowrap; /* Jangan biarkan gambar terbungkus ke baris berikutnya */
+      overflow-x: auto; /* Mengaktifkan scroll horizontal */
+      gap: 5px;
+      margin-top: 5px;
+      padding: 10px 0;
+      scroll-snap-type: x mandatory; /* Menambahkan efek snapping */
+      justify-content: flex-start; /* Gambar sejajar ke kiri */
+    }
+
+    .gallery-item {
+      flex: 0 0 auto; /* Gambar tidak akan membungkus */
+      width: 100%; /* Ukuran dinamis, menyesuaikan dengan lebar kontainer */
+      max-width: 150px; /* Maksimal lebar gambar */
+      height: 100px; /* Tinggi tetap untuk gambar */
+      border-radius: 10px;
+      background-color: #333;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* Scrollbar untuk Webkit (Chrome, Edge, Safari) */
+    .image-gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    /* Responsif */
+    @media (max-width: 480px) {
+      .gallery-item {
+        width: calc(100% / 6 - 10px); /* 6 gambar per baris */
+        height: 100px;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      .gallery-item {
+        width: calc(100% / 8 - 10px); /* 8 gambar per baris */
+        height: 120px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .gallery-item {
+        width: calc(100% / 12 - 10px); /* 12 gambar per baris */
+        height: 150px;
+      }
+    }
+
+    /* Scrollbar untuk webkit (Chrome, Edge, Safari) */
+    .image-gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb:hover {
+      background: #555;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Selamat Datang di Halaman Utama</h1>
-  </header>
+  <div class="container">
+    <div class="banner">
+      <h1 class="banner-title">Nama Web</h1>
+      <h2 class="banner-subtitle">Nama Lainnya Web</h2>
+    </div>
 
-  <div class="saldo">
-    <h2>Saldo Anda: $150</h2>
+    <div class="balance-section">
+      <div class="balance-item">
+        <img src="ETH.PNG" alt="ETH Logo">
+        <span class="error-text" data-error="ERROR">198373797</span>
+      </div>
+      <div class="balance-item">
+        <img src="BTC.PNG" alt="BTC Logo">
+        <span class="error-text" data-error="ERROR">373736665</span>
+      </div>
+      <div class="balance-item">
+        <img src="USDT.PNG" alt="USDT Logo">
+        <span class="error-text" data-error="ERROR">733773367</span>
+      </div>
+    </div>
+
+    <div class="image-gallery">
+      <div class="gallery-item">
+        <img src="Funkie.jpg" alt="USA">
+        <div>USA</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Gambar 2">
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Gambar 3">
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Gambar 4">
+        <div>Image 4</div>
+      </div>
+      <div class="image-gallery">
+      <div class="gallery-item">
+        <img src="Funkie.jpg" alt="USA">
+        <div>USA</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Gambar 2">
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Gambar 3">
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Gambar 4">
+        <div>Image 4</div>
+      </div>
+        <div class="image-gallery">
+      <div class="gallery-item">
+        <img src="Funkie.jpg" alt="USA">
+        <div>USA</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Gambar 2">
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Gambar 3">
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Gambar 4">
+        <div>Image 4</div>
+      </div>
+          <div class="image-gallery">
+      <div class="gallery-item">
+        <img src="Funkie.jpg" alt="USA">
+        <div>USA</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Gambar 2">
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Gambar 3">
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Gambar 4">
+        <div>Image 4</div>
+      </div>
+            <div class="image-gallery">
+      <div class="gallery-item">
+        <img src="Funkie.jpg" alt="USA">
+        <div>USA</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Gambar 2">
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Gambar 3">
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Gambar 4">
+        <div>Image 4</div>
+      </div><div class="image-gallery">
+      <div class="gallery-item">
+        <img src="Funkie.jpg" alt="USA">
+        <div>USA</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Gambar 2">
+        <div>Image 2</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Gambar 3">
+        <div>Image 3</div>
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Gambar 4">
+        <div>Image 4</div>
+      </div>
+      <!-- Tambahkan gambar lainnya -->
+    </div>
+
   </div>
-
-  <div class="gallery-container" id="gallery-container">
-    <!-- Galeri gambar akan ditampilkan di sini -->
-  </div>
-
-  <script>
-    function renderGallery() {
-      const galleryContainer = document.getElementById('gallery-container');
-      const width = window.innerWidth;
-      let galleryHTML = '';
-
-      if (width <= 768) {
-        galleryHTML = `
-          <div class="gallery" style="grid-template-columns: repeat(2, 1fr);">
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 1"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 2"></div>
-          </div>
-        `;
-      } else if (width <= 1024) {
-        galleryHTML = `
-          <div class="gallery" style="grid-template-columns: repeat(3, 1fr);">
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 1"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 2"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 3"></div>
-          </div>
-        `;
-      } else {
-        galleryHTML = `
-          <div class="gallery" style="grid-template-columns: repeat(4, 1fr);">
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 1"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 2"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 3"></div>
-            <div class="gallery-item"><img src="https://via.placeholder.com/200" alt="Gambar 4"></div>
-          </div>
-        `;
-      }
-      galleryContainer.innerHTML = galleryHTML;
-    }
-
-    // Render gallery saat halaman dimuat
-    window.onload = renderGallery;
-
-    // Update gallery saat ukuran layar berubah
-    window.onresize = renderGallery;
-  </script>
 </body>
 </html>
