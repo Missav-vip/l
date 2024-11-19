@@ -4,18 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeri Gambar Anjing 🐕</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Styling Umum */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Banner */
+        .banner {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        /* Galeri Gambar (16 gambar pertama) */
+        .gallery-container {
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .gallery-container h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 gambar per baris */
+            gap: 10px; /* Jarak antar gambar */
+        }
+
+        /* Gambar */
+        .gallery img {
+            width: 100%;  /* Gambar memenuhi kolom */
+            height: 150px; /* Tinggi gambar */
+            object-fit: cover; /* Agar gambar tetap proporsional */
+            border-radius: 10px;
+        }
+
+        /* Galeri yang bisa digulirkan secara horizontal (gambar ke-17 hingga seterusnya) */
+        .scrollable-gallery {
+            display: flex;
+            flex-wrap: nowrap; /* Tidak ada pembungkus baris */
+            overflow-x: auto; /* Memberikan kemampuan untuk menggulir horizontal */
+            gap: 10px; /* Jarak antar gambar */
+            padding-bottom: 10px; /* Memberikan ruang tambahan untuk scroll */
+        }
+
+        .scrollable-gallery img {
+            width: 200px;  /* Lebar gambar */
+            height: 150px; /* Tinggi gambar */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 
     <div class="banner">
-        <h1>Selamat Datang di Galeri Gambar Anjing 🐕</h1>
+        <h1>Galeri Gambar Anjing 🐕</h1>
     </div>
 
     <div class="gallery-container">
-        <h2>Galeri 1: Gambar Anjing 🐕</h2>
+        <h2>Galeri Gambar Anjing 🐕</h2>
         <div class="gallery">
-            <!-- Gambar 1 sampai 32 -->
+            <!-- Gambar 1 sampai 16 yang tetap ditampilkan -->
             <img src="images/dog1.jpg" alt="Anjing 1">
             <img src="images/dog2.jpg" alt="Anjing 2">
             <img src="images/dog3.jpg" alt="Anjing 3">
@@ -32,6 +90,14 @@
             <img src="images/dog14.jpg" alt="Anjing 14">
             <img src="images/dog15.jpg" alt="Anjing 15">
             <img src="images/dog16.jpg" alt="Anjing 16">
+        </div>
+    </div>
+
+    <!-- Galeri Gambar yang bisa digulirkan (Gambar ke-17 dan seterusnya) -->
+    <div class="gallery-container">
+        <h2>Galeri Lanjutan (17 - 32)</h2>
+        <div class="scrollable-gallery">
+            <!-- Gambar ke-17 hingga ke-32 -->
             <img src="images/dog17.jpg" alt="Anjing 17">
             <img src="images/dog18.jpg" alt="Anjing 18">
             <img src="images/dog19.jpg" alt="Anjing 19">
