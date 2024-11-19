@@ -1,166 +1,119 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeri Gambar</title>
-    <style>
-        /* Mengatur body */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri Gambar Geser Kiri Kanan</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        /* Membuat container untuk galeri */
-        .image-gallery-container {
-            width: 100%;
-            padding: 10px;
-            overflow-x: auto;  /* Mengaktifkan scroll horizontal */
-            margin-bottom: 20px;
-        }
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 10px;
+    }
 
-        /* Gambar-gambar dalam galeri */
-        .image-gallery {
-            display: flex; /* Menyusun gambar secara horizontal */
-            gap: 10px; /* Jarak antar gambar */
-        }
+    /* Galeri Gambar */
+    .image-gallery {
+      display: flex;
+      overflow-x: auto; /* Membuat bisa digeser secara horizontal */
+      gap: 10px;
+      padding: 10px;
+    }
 
-        /* Setiap gambar item */
-        .gallery-item {
-            flex: 0 0 auto; /* Gambar tidak bisa berubah ukuran */
-            width: 200px;   /* Lebar gambar */
-            height: 150px;  /* Tinggi gambar */
-            background-color: #ccc;  /* Warna latar belakang jika gambar tidak tersedia */
-            border-radius: 10px; /* Membuat sudut gambar melengkung */
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    .gallery-item {
+      width: 150px; /* Ukuran gambar */
+      height: 150px;
+      border-radius: 10px;
+      background-color: #333;
+      overflow: hidden;
+      position: relative;
+    }
 
-        .gallery-item img {
-            width: 100%;     /* Lebar gambar penuh sesuai ukuran container */
-            height: 100%;    /* Tinggi gambar penuh sesuai ukuran container */
-            object-fit: cover; /* Memastikan gambar tidak terdistorsi */
-        }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
 
-        /* Responsif, mengatur ukuran gambar */
-        @media (max-width: 768px) {
-            .gallery-item {
-                width: 150px;
-                height: 100px;
-            }
-        }
+    /* Scrollbar styling */
+    .image-gallery::-webkit-scrollbar {
+      height: 8px;
+    }
 
-        /* Responsif lebih kecil lagi untuk mobile */
-        @media (max-width: 480px) {
-            .gallery-item {
-                width: 120px;
-                height: 80px;
-            }
-        }
-    </style>
+    .image-gallery::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .image-gallery::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
 </head>
 <body>
-    <div class="image-gallery-container">
-        <div class="image-gallery">
-            <!-- Gambar 1-16 -->
-            <div class="gallery-item">
-                <img src="image1.jpg" alt="Image 1">
-                <div>Image 1</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image2.jpg" alt="Image 2">
-                <div>Image 2</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image3.jpg" alt="Image 3">
-                <div>Image 3</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image4.jpg" alt="Image 4">
-                <div>Image 4</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image5.jpg" alt="Image 5">
-                <div>Image 5</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image6.jpg" alt="Image 6">
-                <div>Image 6</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image7.jpg" alt="Image 7">
-                <div>Image 7</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image8.jpg" alt="Image 8">
-                <div>Image 8</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image9.jpg" alt="Image 9">
-                <div>Image 9</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image10.jpg" alt="Image 10">
-                <div>Image 10</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image11.jpg" alt="Image 11">
-                <div>Image 11</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image12.jpg" alt="Image 12">
-                <div>Image 12</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image13.jpg" alt="Image 13">
-                <div>Image 13</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image14.jpg" alt="Image 14">
-                <div>Image 14</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image15.jpg" alt="Image 15">
-                <div>Image 15</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image16.jpg" alt="Image 16">
-                <div>Image 16</div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="image-gallery">
+      <div class="gallery-item">
+        <img src="image1.jpg" alt="Image 1">
+      </div>
+      <div class="gallery-item">
+        <img src="image2.jpg" alt="Image 2">
+      </div>
+      <div class="gallery-item">
+        <img src="image3.jpg" alt="Image 3">
+      </div>
+      <div class="gallery-item">
+        <img src="image4.jpg" alt="Image 4">
+      </div>
+      <div class="gallery-item">
+        <img src="image5.jpg" alt="Image 5">
+      </div>
+      <div class="gallery-item">
+        <img src="image6.jpg" alt="Image 6">
+      </div>
+      <div class="gallery-item">
+        <img src="image7.jpg" alt="Image 7">
+      </div>
+      <div class="gallery-item">
+        <img src="image8.jpg" alt="Image 8">
+      </div>
+      <div class="gallery-item">
+        <img src="image9.jpg" alt="Image 9">
+      </div>
+      <div class="gallery-item">
+        <img src="image10.jpg" alt="Image 10">
+      </div>
+      <div class="gallery-item">
+        <img src="image11.jpg" alt="Image 11">
+      </div>
+      <div class="gallery-item">
+        <img src="image12.jpg" alt="Image 12">
+      </div>
+      <div class="gallery-item">
+        <img src="image13.jpg" alt="Image 13">
+      </div>
+      <div class="gallery-item">
+        <img src="image14.jpg" alt="Image 14">
+      </div>
+      <div class="gallery-item">
+        <img src="image15.jpg" alt="Image 15">
+      </div>
+      <div class="gallery-item">
+        <img src="image16.jpg" alt="Image 16">
+      </div>
     </div>
-
-    <!-- Galeri untuk gambar ke-17 hingga ke-32 -->
-    <div class="image-gallery-container">
-        <div class="image-gallery">
-            <div class="gallery-item">
-                <img src="image17.jpg" alt="Image 17">
-                <div>Image 17</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image18.jpg" alt="Image 18">
-                <div>Image 18</div>
-            </div>
-            <!-- Tambahkan gambar hingga ke-32 -->
-        </div>
-    </div>
-
-    <!-- Galeri untuk gambar ke-33 hingga ke-48 -->
-    <div class="image-gallery-container">
-        <div class="image-gallery">
-            <div class="gallery-item">
-                <img src="image33.jpg" alt="Image 33">
-                <div>Image 33</div>
-            </div>
-            <div class="gallery-item">
-                <img src="image34.jpg" alt="Image 34">
-                <div>Image 34</div>
-            </div>
-            <!-- Tambahkan gambar hingga ke-48 -->
-        </div>
-    </div>
-
+  </div>
 </body>
 </html>
