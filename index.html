@@ -18,15 +18,15 @@
     }
 
     .image-gallery {
-      display: flex;
-      gap: 5px;
+      display: grid;
+      grid-template-columns: repeat(4, 85px); /* 4 gambar per kolom */
+      grid-gap: 10px;
       padding: 10px;
-      overflow-x: auto;
+      overflow-x: auto; /* Membuat gambar dapat digeser horizontal */
       scroll-snap-type: x mandatory;
     }
 
     .gallery-item {
-      flex: 0 0 auto;
       width: 85px;
       height: 85px;
       background-color: #333;
@@ -58,67 +58,52 @@
 </head>
 <body>
   <div class="image-gallery">
-    <!-- Gambar pertama -->
+    <!-- Gambar pertama sampai gambar ke-16 -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 1">
     </div>
-    <!-- Gambar kedua -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 2">
     </div>
-    <!-- Gambar ketiga -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 3">
     </div>
-    <!-- Gambar keempat -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 4">
     </div>
-    <!-- Gambar kelima -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 5">
     </div>
-    <!-- Gambar keenam -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 6">
     </div>
-    <!-- Gambar ketujuh -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 7">
     </div>
-    <!-- Gambar kedelapan -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 8">
     </div>
-    <!-- Gambar kesembilan -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 9">
     </div>
-    <!-- Gambar kesepuluh -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 10">
     </div>
-    <!-- Gambar kesebelas -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 11">
     </div>
-    <!-- Gambar kedua belas -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 12">
     </div>
-    <!-- Gambar ketiga belas -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 13">
     </div>
-    <!-- Gambar keempat belas -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 14">
     </div>
-    <!-- Gambar kelima belas -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 15">
     </div>
-    <!-- Gambar keenam belas -->
     <div class="gallery-item">
       <img src="Funkie.jpg" alt="Gambar 16">
     </div>
